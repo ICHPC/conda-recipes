@@ -1,0 +1,30 @@
+--- setup.py	2017-04-08 21:57:15.698596551 +0100
++++ setup_new.py	2017-04-08 21:45:38.689014892 +0100
+@@ -12,9 +12,9 @@
+ # for my linux distribution was buggy,
+ # so by the time you read this the bugs have probably been fixed
+ # and you will want to specify a different directory here.
+-IPOPT_DIR = '/usr/local/'
+-
+ import os
++IPOPT_DIR = os.environ['PREFIX']
++
+ from distutils.core import setup
+ from distutils.extension import Extension
+ 
+@@ -48,11 +48,11 @@
+         #extra_link_args=['-Wl,--rpath','-Wl,'+ IPOPT_LIB],
+         library_dirs=[IPOPT_LIB],
+         libraries=[
+-            'ipopt', 'coinblas',
++            'ipopt', 'openblas',
+             #'coinhsl',
+-            'coinmumps',
+-            'coinmetis',
+-            'coinlapack','dl','m',
++            'mumps_common',
++            'metis',
++            'lapack','dl','m',
+             ],
+         include_dirs=[numpy_include, IPOPT_INC],
+         )

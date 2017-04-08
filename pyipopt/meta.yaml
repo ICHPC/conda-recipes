@@ -1,0 +1,28 @@
+package:
+  name: pyipopt
+  version: 0.1
+
+source:
+  git_url: https://github.com/xuy/pyipopt.git
+  git_tag: ab61f901f91d08343eda66545bd6cfb4f68f63b1
+build:
+  number: 0
+
+requirements:
+  build:
+    - python
+    - numpy
+    - lapack 
+    - ipopt
+  run:
+    - numpy
+    - ipopt
+    - python
+
+test:
+  imports:
+    - pyipopt         
+  source_files:
+    examples/hs071_PY3.py
+  commands:
+    - python examples/hs071_PY3.py 
