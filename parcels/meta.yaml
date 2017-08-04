@@ -1,0 +1,42 @@
+ package:
+   name: parcels
+   version: "0.9"
+
+ source:
+   git_url: https://github.com/OceanParcels/parcels.git
+   git_rev: "v0.9"
+   patches:
+# the 'installer' provided does not install parcels.h, and the code
+# looks for it in a daft place.  We install it somewhere else and
+# change the code.
+    - patch1.sjc
+
+ build:
+   number: 4
+
+ requirements:
+  build:
+    - python
+    - progressbar2
+    - numpy >=1.9.1
+
+  run:
+    - numpy >=1.9.1
+    - scipy >=0.16.0
+    - netcdf4 >=1.1.9
+    - flake8 >=2.1.0
+    - pytest >=2.7.0
+    - py >=1.4.27
+    - python
+    - pymbolic
+    - cgen
+    - cachetools >=1.0.0
+    - xarray >=0.5.1
+    - six >=1.10.0
+    - enum34
+    - python-dateutil
+    - progressbar2
+
+ about:
+   home: http://oceanparcels.org/
+   license: MIT

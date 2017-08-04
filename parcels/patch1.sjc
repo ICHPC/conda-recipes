@@ -1,0 +1,12 @@
+diff --git a/parcels/compiler.py b/parcels/compiler.py
+index a41cd95..b523658 100644
+--- a/parcels/compiler.py
++++ b/parcels/compiler.py
+@@ -63,6 +63,6 @@ class GNUCompiler(Compiler):
+     :arg ldargs: A list of arguments to pass to the linker (optional)."""
+     def __init__(self, cppargs=[], ldargs=[]):
+         opt_flags = ['-g', '-O3']
+-        cppargs = ['-Wall', '-fPIC', '-I%s/include' % get_package_dir()] + opt_flags + cppargs
++        cppargs = ['-Wall', '-fPIC', '-I%s/parcels/include' % get_package_dir()] + opt_flags + cppargs
+         ldargs = ['-shared'] + ldargs
+         super(GNUCompiler, self).__init__("gcc", cppargs=cppargs, ldargs=ldargs)
