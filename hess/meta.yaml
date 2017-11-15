@@ -1,0 +1,23 @@
+package:
+  name: hess
+  version: 0.5
+
+source:
+  git_url: https://github.com/huwenboshi/hess
+  git_tag: v0.5.3-beta
+build:
+  number: 0
+
+requirements:
+  build:
+    - python 2.7
+    - numpy
+    - pandas 
+    - pysnptools
+  run:
+    - numpy
+    - pandas
+    - pysnptools
+    - python 2.7
+
+
