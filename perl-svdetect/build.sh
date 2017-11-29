@@ -4,6 +4,6 @@ cd SVDetect_r0.7m
 mkdir -p $PREFIX/bin
 chmod a+rx bin/* scripts/*
 cp bin/* scripts/* $PREFIX/bin
-sed -i 's/#!\/usr\/bin\/perl/#!\/usr\/bin\/env perl/g' $PREFIX/bin/*
+sed -i 's/#!\/usr\/bin\/perl -w/#!\/usr\/bin\/env perl/g' $PREFIX/bin/*
 
 
