@@ -1,0 +1,22 @@
+ package:
+   name: svdetect
+   version: "0.7m"
+
+ build:
+   number: 0
+
+ requirements:
+  build:
+    - perl
+    - perl-tie-ixhash
+    - perl-config-general
+    - perl-parallel-forkmanager
+
+  run:
+    - perl
+    - perl-tie-ixhash
+    - perl-config-general
+    - perl-parallel-forkmanager
+
+ about:
+   license: GPL2,GPL3
