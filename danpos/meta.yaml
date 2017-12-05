@@ -7,11 +7,13 @@ requirements:
     - python 2.7
     - numpy
     - r-base 
+    - rpy2
     - pysnptools
   run:
     - python 2.7
     - numpy
     - r-base
+    - rpy2
     - samtools
 
 
