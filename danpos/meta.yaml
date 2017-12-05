@@ -1,0 +1,17 @@
+package:
+  name: danpos
+  version: 2.2.2
+
+requirements:
+  build:
+    - python 2.7
+    - numpy
+    - r-base 
+    - pysnptools
+  run:
+    - python 2.7
+    - numpy
+    - r-base
+    - samtools
+
+
