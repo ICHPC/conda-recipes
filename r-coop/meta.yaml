@@ -1,0 +1,28 @@
+ package:
+   name: r-coop
+   version: "0.6_1"
+
+ source:
+    url: https://cran.r-project.org/src/contrib/coop_0.6-1.tar.gz
+
+#   patches:
+#     - cx1.patch
+
+ build:
+   number: 0
+   rpaths:
+     - lib/
+     - lib/R/lib/
+
+ requirements:
+  build:
+    - r
+    - r-rcpp
+    - gcc_linux-64
+  run:
+    - r 
+    - libgcc-ng
+
+ about:
+   home: https://cran.r-project.org/package=coop
+   license: GPL2,GPL3
