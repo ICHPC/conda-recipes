@@ -1,0 +1,27 @@
+ package:
+   name: desolve 
+   version: "1.20"
+
+ source:
+    url: https://cran.r-project.org/src/contrib/deSolve_1.20.tar.gz
+    md5: 85c6a2d8568944ae8eef27ac7c35fb25 
+    sha1: 8a3f653b385c4c96eb4248cbdb47911d008d24c3 
+    sha256: 56e945835b0c66d36ebc4ec8b55197b616e387d990788a2e52e924ce551ddda2 
+
+# build:
+#   number: 0
+#   rpaths:
+#     - lib/
+#     - lib/R/lib/
+
+ requirements:
+  build:
+    - r >=3.4.2
+    - libgcc
+    - gcc_linux-64
+    - gfortran_linux-64
+  run:
+    - r >=2.15.0
+ about:
+   home: https://cran.r-project.org/web/packages/deSolve/index.html 
+   license: GPL2,GPL3
