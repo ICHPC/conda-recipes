@@ -1,0 +1,13 @@
+diff --git a/cortex/webgl/view.py b/cortex/webgl/view.py
+index 41a9946..5a38c5b 100644
+--- a/cortex/webgl/view.py
++++ b/cortex/webgl/view.py
+@@ -304,7 +304,7 @@ def show(data, types=("inflated", ), recache=False, cmap='RdBu_r', layout=None,
+             stims[sname] = view.attrs['stim']
+ 
+     package = Package(data)
+-    metadata = json.dumps(package.metadata())
++    metadata = json.dumps(str(package.metadata()))
+     images = package.images
+     subjects = list(package.subjects)
+ 

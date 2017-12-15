@@ -4,37 +4,35 @@
 
  source:
    git_url: https://github.com/gallantlab/pycortex.git
-   git_tag: release-0.1.1
-
+   git_branch: glrework-merged
+   patches:
+    # Patch to change line #307 in /cortex/wengl/view.py as Error: Object with type 'bytes' is not JSON serializable
+    - pycortex.patch
  build:
    number: 0
 
  requirements:
   build:
     - python
+    - numpy
     - cython
-    - scipy
-    - h5py
     - nibabel
-    - matplotlib
-    - pillow
-    - numexpr
-    - tornado
-    - lxml
-    - networkx
-
+    - gcc_linux-64
   run:
     - python
+    - numpy
     - cython
-    - scipy
-    - h5py
+    - scipy >=0.9.0
+    - h5py >=2.3
     - nibabel
     - matplotlib
     - pillow
     - numexpr
-    - tornado
+    - tornado >3.1
     - lxml
     - networkx
+    - shapely
+    - html5lib
 
  about:
    home: https://gallantlab.github.io/
