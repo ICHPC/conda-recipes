@@ -1,0 +1,36 @@
+ package:
+   name: r-mice
+   version: "2.46.0"
+
+ source:
+    url: https://cran.r-project.org/src/contrib/mice_2.46.0.tar.gz
+    md5: d47f5d341a1bcab2a296d56caf95755d
+    sha1: 7e69ae3b55be2b043e626dd6034a5dbd01f7bd42
+    sha256: 5d3109ab3e9a84cb9ba60b0ab477d4e3ed9326fe4831fd99bbf1ed7fcca45bbe
+
+#   patches:
+#     - cx1.patch
+
+ build:
+   number: 0
+   rpaths:
+     - lib/
+     - lib/R/lib/
+
+ requirements:
+  build:
+    - python
+    - r >=2.10.0
+    - r-rcpp
+    - gcc_linux-64
+    - gxx_linux-64
+    - r-lattice
+  run:
+    - python
+    - r >=2.10.0
+    - r-rcpp
+    - libgcc-ng
+    - r-lattice
+ about:
+   home: https://cran.r-project.org/web/packages/mice/index.html
+   license: GPL2,GPL3
