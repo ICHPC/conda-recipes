@@ -1,0 +1,31 @@
+ package:
+   name: r-gdsfmt
+   version: "1.14.1"
+
+ source:
+    url: http://www.bioconductor.org/packages/release/bioc/src/contrib/gdsfmt_1.14.1.tar.gz
+    md5: 06b9cf16584af4ef222070de9c140b7b
+    sha1: be78848e796929c1a8e8bb2aca66e167653fb713
+    sha256: e183b9b979512e61dea13bfbb63279d4f018faff5effbca614dccf526591fe34
+
+#   patches:
+#     - cx1.patch
+
+ build:
+   number: 0
+   rpaths:
+     - lib/
+     - lib/R/lib/
+
+ requirements:
+  build:
+    - r >=3.3.0
+    - r-base
+    - gxx_linux-64
+
+  run:
+    - r >=3.3.0
+    - r-base
+ about:
+   home: https://bioconductor.org/packages/release/bioc/html/gdsfmt.html
+   license: LGPL-3
