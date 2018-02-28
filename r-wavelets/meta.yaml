@@ -1,0 +1,29 @@
+ package:
+   name: r-wavelets
+   version: "0.3_0"
+
+ source:
+    url: https://cran.r-project.org/src/contrib/wavelets_0.3-0.tar.gz 
+    md5: bd3217c89f7462d934c0c24bb0b5c9f7
+    sha1: 9465804f9672504950f9ced2c2e4f700e136afc8
+    sha256: eaba776ef296309c6840c80e48140a6b33caf567fcdc7e6ea7b7d0cecf3f3a90
+
+ build:
+   number: 0
+   rpaths:
+     - lib/
+     - lib/R/lib/
+
+ requirements:
+  build:
+    - r >=2.0.0
+    - r-base
+    - gxx_linux-64
+  run:
+    - r >=r2.0.0
+    - r-base
+
+ about:
+   home: https://cran.r-project.org/web/packages/wavelets/index.html
+   summary: This package contains functions for computing and plotting discrete wavelet transforms (DWT) and maximal overlap discrete wavelet transforms (MODWT), as well as their inverses. Additionally, it contains functionality for computing and plotting wavelet transform filters that are used in the above decompositions as well as multiresolution analyses.
+   license: GPL-2,GPL-3
