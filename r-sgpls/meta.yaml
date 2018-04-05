@@ -9,19 +9,19 @@
     sha256: 144fbfde08e0e1176b23004d12a82c1b60e1cd3bd35227591608ef627f9062ca
 
  build:
-   number: 0
+   number: 1
 
  requirements:
   build:
     - r
-    - r-base
+    - r-base >=3.3.1
     - gcc_linux-64
     - gfortran_linux-64
     - r-mixomics
     - r-mvtnorm
   run:
     - r
-    - r-base
+    - r-base >=3.3.1
     - r-mixomics
     - r-mvtnorm
 
