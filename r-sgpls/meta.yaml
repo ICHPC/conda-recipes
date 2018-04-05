@@ -1,0 +1,31 @@
+ package:
+   name: r-sgpls
+   version: "1.7"
+
+ source:
+    url: https://cran.r-project.org/src/contrib/sgPLS_1.7.tar.gz
+    md5: 201b9dbd11ea47a875211e4728bd47c3
+    sha1: 63d20ea888ad55d6f50b349fcf71e027706bae98
+    sha256: 144fbfde08e0e1176b23004d12a82c1b60e1cd3bd35227591608ef627f9062ca
+
+ build:
+   number: 0
+
+ requirements:
+  build:
+    - r
+    - r-base
+    - gcc_linux-64
+    - gfortran_linux-64
+    - r-mixomics
+    - r-mvtnorm
+  run:
+    - r
+    - r-base
+    - r-mixomics
+    - r-mvtnorm
+
+ about:
+   home: https://cran.r-project.org/web/packages/sgPLS/index.html
+   summary: Regularized version of partial least square approaches providing sparse, group, and sparse group versions of partial least square regression models (Liquet, B., Lafaye de Micheaux, P., Hejblum B., Thiebaut, R. (2016). 
+   license: GPL2,GPL3
