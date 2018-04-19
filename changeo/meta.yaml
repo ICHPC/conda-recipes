@@ -1,0 +1,46 @@
+{% set version = '0.3.12' %}
+{% set name = "ChangeO" %}
+
+package:
+  name: '{{ name|lower }}'
+  version: '{{ version }}'
+
+source:
+  fn: '{{ name }}-{{ version }}.tar.gz'
+  url:
+    - 'https://bitbucket.org/kleinstein/changeo/downloads/{{ name|lower }}-{{ version }}.tar.gz'
+  sha256: bffedb456141a68c063dcee39ae1837c33a1db186bb0ddc73198c392c18b34ae
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - python >=3.4
+    - numpy >=1.8
+    - pandas >=0.15
+    - biopython >=1.65
+    - pyyaml >=3.12
+    - setuptools >=2.0
+    - presto >=0.5
+
+  run:
+    - python >=3.4
+    - numpy >=1.8
+    - pandas >=0.15
+    - biopython >=1.65
+    - pyyaml >=3.12
+    - setuptools >=2.0
+    - presto >=0.5
+
+test:
+  # Python imports
+  imports:
+    - changeo
+
+about:
+  home: 'https://bitbucket.org/kleinstein/changeo/overview'
+  license: 'Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)'
+  license_file: LICENSE
+  summary: 'Change-O is a collection of tools for processing the output of V(D)J alignment tools, assigning clonal clusters to immunoglobulin (Ig) sequences, and reconstructing germline sequences.'
+  Description: 'Dramatic improvements in high-throughput sequencing technologies now enable large-scale characterization of Ig repertoires, defined as the collection of trans-membrane antigen-receptor proteins located on the surface of B cells and T cells. Change-O is a suite of utilities to facilitate advanced analysis of Ig and TCR sequences following germline segment assignment. Change-O handles output from IMGT/HighV-QUEST and IgBLAST, and provides a wide variety of clustering methods for assigning clonal groups to Ig sequences. Record sorting, grouping, and various database manipulation operations are also included.'
