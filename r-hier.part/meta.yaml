@@ -1,0 +1,54 @@
+{% set version = '1.0-4' %}
+{% set name = 'hier.part' %}
+{% set posix = 'm2-' if win else '' %}
+{% set native = 'm2w64-' if win else '' %}
+
+package:
+  name: 'r-{{ name }}'
+  version: '{{ version|replace("-", "_") }}'
+
+source:
+  fn: '{{ name}}_{{ version }}.tar.gz'
+  url:
+    - 'https://cran.r-project.org/src/contrib/{{ name }}_{{ version }}.tar.gz'
+  sha256: 'e9f901506b5cbbbf0539d2ed395bfd30e14ae787e109de39b8642e38ff6b4c0d'
+
+build:
+  merge_build_host: True  # [win]
+  number: 0
+
+  # This is required to make R link correctly on Linux.
+  rpaths:
+    - lib/R/lib/
+    - lib/
+
+requirements:
+  build:
+    - {{ compiler('c') }}          # [not win]
+    - {{ compiler('fortran') }}    # [not win]
+    - {{native}}toolchain          # [win]
+    - {{posix}}filesystem          # [win]
+    - {{posix}}make
+
+  host:
+    - r
+    - r-base
+    - r-gtools
+
+  run:
+    - r
+    - r-base
+    - r-gtools
+    - {{native}}gcc-libs           # [win]
+
+test:
+  commands:
+    - $R -e "library('hier.part')"        # [not win]
+    - "\"%R%\" -e \"library('hier.part')\""  # [win]
+
+about:
+  home: 'https://CRAN.R-project.org/package=hier.part'
+  license: 'GPL-2,GPL-3'
+  summary: 'Variance partition of a multivariate data set'
+  license_family: 'GPL'
+
