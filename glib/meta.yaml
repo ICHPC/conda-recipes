@@ -21,7 +21,7 @@ source:
     - hardcoded-paths.patch  # [osx]
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
   detect_binary_files_with_prefix: true
   run_exports:
@@ -40,12 +40,12 @@ requirements:
     - libffi >=3.0.0
     - gettext         # [not linux]
     - zlib
-    - pcre
+    - pcre 8.39
     - libiconv        # [not win]
   run:
     - libffi >=3.0.0
     - gettext         # [not linux]
-    - pcre
+    - pcre 8.39
     - libiconv        # [not win]
 
 test:
