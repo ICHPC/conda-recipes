@@ -1,0 +1,63 @@
+{% set version = '1.2' %}
+{% set name = 'rcdd' %}
+{% set posix = 'm2-' if win else '' %}
+{% set native = 'm2w64-' if win else '' %}
+
+package:
+  name: 'r-{{ name }}'
+  version: {{ version|replace("-", "_") }}
+
+source:
+  fn: '{{ name }}_{{ version }}.tar.gz'
+  url:
+    - 'https://cran.r-project.org/src/contrib/{{ name }}_{{ version }}.tar.gz'
+  sha256: 5e910060841ee7a1fcbfbafb189323633ac3f1d753459727f31002ba5d6ef1e8
+
+build:
+  merge_build_host: True  # [win]
+  number: 0
+
+  rpaths:
+    - lib/R/lib/
+    - lib/
+
+requirements:
+  build:
+    - {{ compiler('c') }}          # [not win]
+    - {{native}}toolchain          # [win]
+    - {{posix}}filesystem          # [win]
+    - {{posix}}sed                 # [win]
+    - {{posix}}grep                # [win]
+    - {{posix}}autoconf
+    - {{posix}}automake-wrapper    # [win]
+    - {{posix}}automake            # [win]
+    - {{posix}}pkg-config
+    - {{posix}}make
+
+  host:
+    - r-base
+    - gmp
+
+  run:
+    - r-base
+    - {{native}}gcc-libs           # [win]
+    - gmp
+
+test:
+  commands:
+    - $R -e "library('rcdd')"           # [not win]
+    - "\"%R%\" -e \"library('rcdd')\""  # [win]
+
+about:
+  home: http://www.stat.umn.edu/geyer/rcdd/
+  license: GPL-2
+  summary: 'rcdd - Computational Geometry - C Double Description'
+  Description: |
+    'R interface to (some of) cddlib (<http://www.ifor.math.ethz.ch/~fukuda/cdd_home/cdd.html>).
+    Converts back and forth between two representations of a convex polytope: as solution
+    of a set of linear equalities and inequalities and as convex hull of set of points
+    and rays. Also does linear programming and redundant generator elimination (for
+    example, convex hull in n dimensions).  All functions can use exact infinite-precision
+    rational arithmetic.'
+
+  license_family: GPL2
