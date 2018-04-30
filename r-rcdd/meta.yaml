@@ -15,7 +15,7 @@ source:
 
 build:
   merge_build_host: True  # [win]
-  number: 0
+  number: 1
 
   rpaths:
     - lib/R/lib/
@@ -35,11 +35,11 @@ requirements:
     - {{posix}}make
 
   host:
-    - r-base
+    - r >=3.0.2
     - gmp
 
   run:
-    - r-base
+    - r >=3.0.2
     - {{native}}gcc-libs           # [win]
     - gmp
 
