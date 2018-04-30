@@ -1,0 +1,56 @@
+{% set version = '0.5-3' %}
+{% set name = 'hitandrun' %}
+{% set posix = 'm2-' if win else '' %}
+{% set native = 'm2w64-' if win else '' %}
+
+package:
+  name: 'r-{{ name }}'
+  version: '{{ version|replace("-", "_") }}'
+
+source:
+  fn: '{{ name }}_{{ version }}.tar.gz'
+  url:
+    - 'https://cran.r-project.org/src/contrib/{{ name }}_{{ version }}.tar.gz'
+  sha256: 9664b392f63bcc3e5e1db81e4f7a9f43b76b585bcfdea2387edeeaf97e46b632
+
+build:
+  merge_build_host: True  # [win]
+  number: 0
+
+  rpaths:
+    - lib/R/lib/
+    - lib/
+
+# Suggests: testthat (>= 0.8)
+requirements:
+  build:
+    - {{ compiler('c') }}          # [not win]
+    - {{native}}toolchain          # [win]
+    - {{posix}}filesystem          # [win]
+    - {{posix}}make
+
+  host:
+    - r-base
+    - r-rcdd >=1.1
+
+  run:
+    - r-base
+    - {{native}}gcc-libs           # [win]
+    - r-rcdd >=1.1
+
+test:
+  commands:
+    - $R -e "library('hitandrun')"           # [not win]
+    - "\"%R%\" -e \"library('hitandrun')\""  # [win]
+
+about:
+  home: 'http://github.com/gertvv/{{ name }}'
+  license: GPL-3
+  summary: '"Hit and Run" and "Shake and Bake" for Sampling Uniformly from Convex Shapes.'
+  Description: |
+    'The "Hit and Run" Markov Chain Monte Carlo method for sampling uniformly from convex
+    shapes defined by linear constraints, and the "Shake and Bake" method for sampling
+    from the boundary of such shapes. Includes specialized functions for sampling normalized
+    weights with arbitrary linear constraints.'
+
+  license_family: GPL3
