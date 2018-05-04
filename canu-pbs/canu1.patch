@@ -1,0 +1,91 @@
+diff --git a/src/pipelines/canu/Defaults.pm b/src/pipelines/canu/Defaults.pm
+index cbe4be2..37010ea 100644
+--- a/src/pipelines/canu/Defaults.pm
++++ b/src/pipelines/canu/Defaults.pm
+@@ -794,12 +794,12 @@ sub setDefaults () {
+ 
+     #####  Grid Engine configuration, internal parameters.  These are filled out in canu.pl, right after this function returns.
+ 
+-    setDefault("gridEngine",                          undef, "Grid engine configuration, not documented");
+-    setDefault("gridEngineSubmitCommand",             undef, "Grid engine configuration, not documented");
++    setDefault("gridEngine",                          "PBSPRO", "Grid engine configuration, not documented");
++    setDefault("gridEngineSubmitCommand",             "qsub", "Grid engine configuration, not documented");
+     setDefault("gridEngineNameOption",                undef, "Grid engine configuration, not documented");
+     setDefault("gridEngineArrayOption",               undef, "Grid engine configuration, not documented");
+     setDefault("gridEngineArrayName",                 undef, "Grid engine configuration, not documented");
+-    setDefault("gridEngineArrayMaxJobs",              undef, "Grid engine configuration, not documented");
++    setDefault("gridEngineArrayMaxJobs",              10000, "Grid engine configuration, not documented");
+     setDefault("gridEngineOutputOption",              undef, "Grid engine configuration, not documented");
+     setDefault("gridEnginePropagateCommand",          undef, "Grid engine configuration, not documented");
+     setDefault("gridEngineThreadsOption",             undef, "Grid engine configuration, not documented");
+@@ -822,7 +822,7 @@ sub setDefaults () {
+ 
+     #####  Grid Engine configuration, for each step of the pipeline
+ 
+-    setDefault("gridOptions",           undef,  "Grid engine options applied to all jobs");
++    setDefault("gridOptions",           "-l walltime=24:00:00",  "Grid engine options applied to all jobs");
+     setDefault("gridOptionsExecutive",  undef,  "Grid engine options applied to the canu executive script");
+     setDefault("gridOptionsJobName",    undef,  "Grid jobs job-name suffix");
+ 
+diff --git a/src/pipelines/canu/Execution.pm b/src/pipelines/canu/Execution.pm
+index 2d4aaa1..ade976a 100644
+--- a/src/pipelines/canu/Execution.pm
++++ b/src/pipelines/canu/Execution.pm
+@@ -635,7 +635,9 @@ sub submitScript ($$) {
+     print F "rm -f canu.out\n";
+     print F "ln -s canu-scripts/canu.$idx.out canu.out\n";
+     print F "\n";
+-    print F "/usr/bin/env perl \\\n";
++    print F "module load java";
++    print F "\n";
++#   print F "/usr/bin/env perl \\\n";
+     print F "\$bin/" . basename($0) . " " . getCommandLineOptions() . " canuIteration=" . getGlobal("canuIteration") . "\n";
+     close(F);
+ 
+@@ -671,9 +673,9 @@ sub submitScript ($$) {
+        $gridOpts .= getGlobal("gridOptions")             if (defined(getGlobal("gridOptions")));
+        $gridOpts .= " "                                  if (defined($gridOpts));
+     }
+-    $gridOpts .= $memOption                           if (defined($memOption));
+-    $gridOpts .= " "                                  if (defined($gridOpts));
+     $gridOpts .= $thrOption                           if (defined($thrOption));
++    $gridOpts .= ":"                                  if (defined($gridOpts));
++    $gridOpts .= $memOption                           if (defined($memOption));
+     if (uc(getGlobal("gridEngine")) ne "LSF") {
+        $gridOpts .= " "                                  if (defined($gridOpts));
+        $gridOpts .= getGlobal("gridOptions")             if (defined(getGlobal("gridOptions")));
+@@ -883,8 +885,8 @@ sub buildGridJob ($$$$$$$$$) {
+     my $opts;
+ 
+     $opts  = "$stageOption "    if (defined($stageOption));
+-    $opts .= "$memOption "      if (defined($memOption));
+-    $opts .= "$thrOption "      if (defined($thrOption));
++    $opts .= "$thrOption"      if (defined($thrOption));
++    $opts .= ":$memOption "      if (defined($memOption));
+     $opts .= "$globalOptions "  if (defined($globalOptions));
+     $opts .= "$jobOptions "     if (defined($jobOptions));
+     $opts .= "$outputOption "   if (defined($outputOption));
+@@ -1096,7 +1098,7 @@ sub submitOrRunParallelJob ($$$$@) {
+         purgeGridJobSubmitScripts($path, $script);
+ 
+         foreach my $j (@jobs) {
+-            my ($cmd, $jobName) = buildGridJob($asm, $jobType, $path, $script, $mem, $thr, $dsk, $j, undef);
++            my ($cmd, $jobName) = buildGridJob($asm, $jobType, $path, $script, $thr, $mem, $dsk, $j, undef);
+ 
+             runCommandSilently($path, "./$cmd.sh", 0) and caFailure("Failed to submit batch jobs", "$path/$cmd.out");
+ 
+diff --git a/src/pipelines/canu/Grid_PBSTorque.pm b/src/pipelines/canu/Grid_PBSTorque.pm
+index c5705d0..efd6ae0 100644
+--- a/src/pipelines/canu/Grid_PBSTorque.pm
++++ b/src/pipelines/canu/Grid_PBSTorque.pm
+@@ -191,8 +191,8 @@ sub configurePBSTorque () {
+     setGlobalIfUndef("gridEngineArrayName",                  "ARRAY_NAME");
+     setGlobalIfUndef("gridEngineArrayMaxJobs",               $maxArraySize);
+     setGlobalIfUndef("gridEngineOutputOption",               "-o");
+-    setGlobalIfUndef("gridEngineThreadsOption",              "-l nodes=1:ppn=THREADS");
+-    setGlobalIfUndef("gridEngineMemoryOption",               "-l mem=MEMORY");
++    setGlobalIfUndef("gridEngineThreadsOption",              "-l select=1:ncpus=THREADS");
++    setGlobalIfUndef("gridEngineMemoryOption",               "mem=MEMORY");
+     setGlobalIfUndef("gridEnginePropagateCommand",           "qalter -W depend=afterany:\"WAIT_TAG\"");
+     setGlobalIfUndef("gridEngineNameToJobIDCommand",         "qstat -f |grep -F -B 1 WAIT_TAG | grep Id: | grep -F [] |awk '{print \$NF}'");
+     setGlobalIfUndef("gridEngineNameToJobIDCommandNoArray",  "qstat -f |grep -F -B 1 WAIT_TAG | grep Id: |awk '{print \$NF}'");
