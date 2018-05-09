@@ -1,0 +1,104 @@
+{% set name = "BraCeR" %}
+{% set version = "0.1" %}
+
+package:
+  name: '{{ name|lower }}'
+  version: '{{ version }}'
+source:
+# Bracer currently has no releases. Cannot add with unstable urls to bioconda channel.
+  git_url: https://github.com/Teichlab/bracer.git
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - python >=3.4.0
+    - r >=3.1.2
+    - biopython
+    - setuptools
+    - numpy
+    - statsmodels ==0.8.0
+    - r-ggplot2 >=2.0.0
+    - bowtie2
+    - trinity ==2.4.0
+    - igblast
+    - blast
+    - kallisto
+    - graphviz
+    - phylip
+    - trim-galore
+    - r-alakazam >=0.2.7
+    - biopython >=1.66
+    - cycler >=0.10.0
+    - decorator >=4.0.9
+    - matplotlib >=1.5.1
+    - networkx >=1.11
+    - numpy >=1.11.0
+    - pandas >=0.18.0
+    - prettytable >=0.7.2
+    - pydotplus >=2.0.2
+    - pyparsing >=2.0.3
+    - python-dateutil >=2.5.2
+    - python-Levenshtein >=0.12.0
+    - pytz >=2016.3
+    - scipy >=0.17.0
+    - seaborn >=0.7.0
+    - six >=1.10.0
+    - mock >=2.0.0
+    - future >=0.15.2
+    - changeo >=0.3.7
+    - cutadapt >=1.14.0 
+ 
+  run:
+    - python >=3.4.0
+    - r >=3.1.2
+    - biopython
+    - setuptools
+    - numpy
+    - statsmodels ==0.8.0
+    - r-ggplot2 >=2.0.0
+    - bowtie2
+    - trinity ==2.4.0
+    - igblast
+    - blast
+    - kallisto
+    - graphviz
+    - phylip
+    - trim-galore
+    - r-alakazam >=0.2.7
+    - biopython >=1.66
+    - cycler >=0.10.0
+    - decorator >=4.0.9
+    - matplotlib >=1.5.1
+    - networkx >=1.11
+    - numpy >=1.11.0
+    - pandas >=0.18.0
+    - prettytable >=0.7.2
+    - pydotplus >=2.0.2
+    - pyparsing >=2.0.3
+    - python-dateutil >=2.5.2
+    - python-Levenshtein >=0.12.0
+    - pytz >=2016.3
+    - scipy >=0.17.0
+    - seaborn >=0.7.0
+    - six >=1.10.0
+    - mock >=2.0.0
+    - future >=0.15.2
+    - changeo >=0.3.7
+    - cutadapt >=1.14.0
+test:
+  commands:
+    - bracer --help
+
+about:
+  home: 'https://github.com/Teichlab/bracer'
+  license: 'Apache License 2.0'
+  license_family: 'Apache'
+  summary: 'BraCeR - reconstruction of B cell receptor sequences from single-cell RNA-seq data.'
+  Description: |
+    'This tool reconstructs the sequences of rearranged and expressed B cell receptor genes from single-cell RNA-seq data. It then uses the BCR sequences to identify cells that derive from the same original clonally-expanded cell.'
+
+extra:
+  identifiers:
+    - doi: 10.1101/185504
