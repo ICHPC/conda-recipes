@@ -1,36 +1,76 @@
- package:
-   name: r-mice
-   version: "2.46.0"
+{% set version = '2.46.0' %}
+{% set name = 'mice' %}
+{% set posix = 'm2-' if win else '' %}
+{% set native = 'm2w64-' if win else '' %}
+{%set hash = '5d3109ab3e9a84cb9ba60b0ab477d4e3ed9326fe4831fd99bbf1ed7fcca45bbe' %}
 
- source:
-    url: https://cran.r-project.org/src/contrib/mice_2.46.0.tar.gz
-    md5: d47f5d341a1bcab2a296d56caf95755d
-    sha1: 7e69ae3b55be2b043e626dd6034a5dbd01f7bd42
-    sha256: 5d3109ab3e9a84cb9ba60b0ab477d4e3ed9326fe4831fd99bbf1ed7fcca45bbe
+package:
+  name: 'r-{{ name }}'
+  version: '{{ version }}'
 
-#   patches:
-#     - cx1.patch
+source:
+  fn: '{{ name }}_{{ version }}.tar.gz'
+  url:
+    - 'https://cran.r-project.org/src/contrib/{{ name }}_{{ version }}.tar.gz'
+    - 'https://cran.r-project.org/src/contrib/Archive/{{ name }}/{{ name }}_{{ version }}.tar.gz'
+  sha256: '{{ hash }}'
 
- build:
-   number: 0
-   rpaths:
-     - lib/
-     - lib/R/lib/
+build:
+  merge_build_host: True  # [win]
+  number: 0
 
- requirements:
+  rpaths:
+    - lib/R/lib/
+    - lib/
+
+requirements:
   build:
-    - python
-    - r >=2.10.0
+    - {{ compiler('c') }}        # [not win]
+    - {{ compiler('cxx') }}      # [not win]
+    - {{native}}toolchain        # [win]
+    - {{posix}}filesystem        # [win]
+    - {{posix}}make
+
+  host:
+    - r-base
+    - r-mass
     - r-rcpp
-    - gcc_linux-64
-    - gxx_linux-64
     - r-lattice
+    - r-nnet
+    - r-rpart
+    - r-survival
+
   run:
-    - python
-    - r >=2.10.0
+    - r-base
+    - {{native}}gcc-libs         # [win]
+    - r-mass
     - r-rcpp
-    - libgcc-ng
     - r-lattice
- about:
-   home: https://cran.r-project.org/web/packages/mice/index.html
-   license: GPL2,GPL3
+    - r-nnet
+    - r-rpart
+    - r-survival
+
+test:
+  commands:
+    - $R -e "library('mice')"           # [not win]
+    - "\"%R%\" -e \"library('mice')\""  # [win]
+
+
+about:
+  home: 'http://stefvanbuuren.github.io/mice/'
+  license: 'GPL-2,GPL-3'
+  summary: 'Multiple imputation using Fully Conditional Specification (FCS) implemented by the
+    MICE algorithm as described in Van Buuren and Groothuis-Oudshoorn (2011) <doi:10.18637/jss.v045.i03>.
+    Each variable has its own imputation model. Built-in imputation models are provided
+    for continuous data (predictive mean matching, normal), binary data (logistic regression),
+    unordered categorical data (polytomous logistic regression) and ordered categorical
+    data (proportional odds). MICE can also impute continuous two-level data (normal
+    model, pan, second-level variables). Passive imputation can be used to maintain
+    consistency between variables. Various diagnostic plots are available to inspect
+    the quality of the imputations.'
+  license_family: 'GPL'
+
+extra:
+  recipe-maintainers:
+    - slacalle
+
