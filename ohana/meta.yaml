@@ -1,0 +1,44 @@
+{% set version = '0.1' %}
+{% set name = 'Ohana' %}
+
+package:
+  name: '{{ name|lower }}'
+  version: '{{ version }}'
+
+source:
+  git_url: 'https://github.com/jade-cheng/ohana.git'
+  patches:
+     - ohana1.patch
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - make
+    - openblas
+
+  run:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - make
+    - openblas
+
+test:
+  commands:
+    - convert --version
+    - cpax --version
+    - nemeco --version
+    - qpas --version
+    - selscan --version
+
+about:
+  home: 'https://github.com/jade-cheng/ohana'
+  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
+  summary: 'Ohana is a suite of software for analyzing population structure and admixture history using unsupervised learning methods.
+     We construct statistical models to infer individual clustering from which we identify outliers for selection analyses.
+     This project is directed by Dr. Rasmus Nielsen at University of California Berkeley. Jade Cheng is funded by the Bioinformatics,
+     Computer Science Department at Aarhus University and the Natural History Museum of Denmark at Copenhagen University.'
+
