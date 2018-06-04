@@ -1,0 +1,54 @@
+{% set version = '0.4' %}
+{% set name = 'bfa' %}
+{% set hash = '66e4efbc87cb5f565e5f791bdeb323e45c962e14db44ac33f8880bda0d21c622' %}
+
+package:
+  name: 'r-{{ name }}'
+  version: '{{ version }}'
+
+source:
+  fn: bfa_{{ version }}.tar.gz
+  url:
+    - 'https://cran.r-project.org/src/contrib/bfa_{{ version }}.tar.gz'
+    - 'https://cran.r-project.org/src/contrib/Archive/bfa/bfa_{{ version }}.tar.gz'
+  sha256: '{{ hash }}'
+
+build:
+  skip: True    # [win]
+  number: 0
+
+  rpaths:
+    - lib/R/lib/
+    - lib/
+
+requirements:
+  build:
+    - {{ compiler('c') }}        # [not win]
+    - {{ compiler('cxx') }}      # [not win]
+    - make
+
+  host:
+    - r-base
+    - r-rcpp >=0.10.6
+    - r-rcpparmadillo
+    - r-coda
+
+  run:
+    - r-base
+    - r-rcpp >=0.10.6
+    - r-rcpparmadillo
+    - r-coda
+
+test:
+  commands:
+    - $R -e "library('bfa')"           # [not win]
+
+about:
+  home: 'https://CRAN.R-project.org/package=bfa'
+  license: 'GPL-3'
+  license_family: 'GPL'
+  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
+  summary: 'Provides model fitting for several Bayesian factor models including Gaussian, ordinal
+    probit, mixed and semiparametric Gaussian copula factor models under a range of
+    priors.'
+
