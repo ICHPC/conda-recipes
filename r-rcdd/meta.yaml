@@ -1,21 +1,20 @@
 {% set version = '1.2' %}
 {% set name = 'rcdd' %}
-{% set posix = 'm2-' if win else '' %}
-{% set native = 'm2w64-' if win else '' %}
+{% set hash = '5e910060841ee7a1fcbfbafb189323633ac3f1d753459727f31002ba5d6ef1e8' %}
 
 package:
   name: 'r-{{ name }}'
-  version: {{ version|replace("-", "_") }}
+  version: '{{ version|replace("-", "_") }}'
 
 source:
   fn: '{{ name }}_{{ version }}.tar.gz'
   url:
     - 'https://cran.r-project.org/src/contrib/{{ name }}_{{ version }}.tar.gz'
-  sha256: 5e910060841ee7a1fcbfbafb189323633ac3f1d753459727f31002ba5d6ef1e8
+  sha256: '{{ hash }}'
 
 build:
-  merge_build_host: True  # [win]
-  number: 1
+  skip: True  # [win]
+  number: 2
 
   rpaths:
     - lib/R/lib/
@@ -23,16 +22,10 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}          # [not win]
-    - {{native}}toolchain          # [win]
-    - {{posix}}filesystem          # [win]
-    - {{posix}}sed                 # [win]
-    - {{posix}}grep                # [win]
-    - {{posix}}autoconf
-    - {{posix}}automake-wrapper    # [win]
-    - {{posix}}automake            # [win]
-    - {{posix}}pkg-config
-    - {{posix}}make
+    - {{ compiler('c') }}
+    - autoconf
+    - pkg-config
+    - make
 
   host:
     - r >=3.0.2
@@ -40,17 +33,17 @@ requirements:
 
   run:
     - r >=3.0.2
-    - {{native}}gcc-libs           # [win]
     - gmp
 
 test:
   commands:
-    - $R -e "library('rcdd')"           # [not win]
-    - "\"%R%\" -e \"library('rcdd')\""  # [win]
+    - $R -e "library('rcdd')"
 
 about:
-  home: http://www.stat.umn.edu/geyer/rcdd/
-  license: GPL-2
+  home: 'http://www.stat.umn.edu/geyer/rcdd/'
+  license: 'GPL-2'
+  license_family: 'GPL2'
+  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
   summary: 'rcdd - Computational Geometry - C Double Description'
   Description: |
     'R interface to (some of) cddlib (<http://www.ifor.math.ethz.ch/~fukuda/cdd_home/cdd.html>).
@@ -60,4 +53,3 @@ about:
     example, convex hull in n dimensions).  All functions can use exact infinite-precision
     rational arithmetic.'
 
-  license_family: GPL2
