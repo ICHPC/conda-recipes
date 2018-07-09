@@ -1,0 +1,40 @@
+{% set name = 'fltk' %}
+{% set version = '1.3.4' %}
+{% set longversion = '1.3.4-2' %}
+{% set hash = '8cfe7690d70f9a3db5cd88748a82aa7958a9dc7ec3d7e94eef9063e107864150' %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  fn: {{ name }}-{{ longversion }}-source.tar.gz
+  url: http://fltk.org/pub/{{ name }}/{{ version }}/{{ name }}-{{ longversion }}-source.tar.bz2
+  sha256: {{ hash }}
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - toolchain
+    - cmake
+
+test:
+ 
+about:
+  home: http://www.fltk.org/
+  license: LGPL-2.0
+  license_family: LGPL
+  license_file: COPYING
+  summary: 'The Fast Light Tool Kit ("FLTK", pronounced "fulltick") is a cross-platform C++ GUI toolkit'
+
+  description: |
+    'FLTK (pronounced "fulltick") is a cross-platform C++ GUI toolkit for
+    UNIX/Linux (X11), Microsoft Windows, and MacOS X. FLTK provides
+    modern GUI functionality without the bloat and supports 3D graphics via
+    OpenGL and its built-in GLUT emulation.
+    FLTK is designed to be small and modular enough to be statically
+    linked, but works fine as a shared library. FLTK also includes an
+    excellent UI builder called FLUID that can be used to create
+    applications in minutes.'
