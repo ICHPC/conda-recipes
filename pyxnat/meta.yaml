@@ -1,0 +1,39 @@
+{% set name = "pyxnat" %}
+{% set version = "1.0.1.0" %}
+{% set hash_value = "ae56c4c22e84b03da7cedce04eb2e4c9243a1b45a8c90c7be143ac333f0eb863" %}
+
+package:
+  name: '{{ name|lower }}'
+  version: '{{ version }}'
+
+source:
+  fn: '{{ name }}-{{ version }}.tar.gz'
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: '{{ hash_value }}'
+
+build:
+  number: 0
+  script: 'python setup.py install'
+
+requirements:
+  host:
+    - python ==2.7.*
+    - requests
+    - lxml
+  run:
+    - python ==2.7.*
+    - requests
+    - lxml
+
+test:
+  imports:
+    - pyxnat
+
+about:
+  home: http://packages.python.org/pyxnat/
+  license: BSD
+  license_family: BSD
+  license_file: ''
+  summary: Xnat in Python
+  description: 'PyXNAT provides an API to access data on XNAT (see http://xnat.org) servers.'
+
