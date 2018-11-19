@@ -4,7 +4,7 @@
 
 package:
   name: 'r-{{ name|lower }}'
-  version: '{{ version }}'
+  version: {{ version }}
 
 source:
   fn: '{{ name }}_{{ version }}.tar.gz'
@@ -13,7 +13,7 @@ source:
 
 build:
   skip: True    # [win]
-  number: 0
+  number: 1
 
   rpaths:
     - lib/R/lib/
@@ -28,10 +28,10 @@ requirements:
     - make
 
   host:
-    - r-base ==3.4.1
+    - r-base
 
   run:
-    - r-base ==3.4.1
+    - r-base
 
 test:
   commands:
@@ -39,10 +39,11 @@ test:
 
 about:
   home: http://statmath.wu.ac.at/unuran/
-  license: GPL-3
-  license_family: GPL3
+  license: GPL (>= 2)
+  license_family: GPL
   license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
-  summary: 'Interface to the UNU.RAN library for Universal Non-Uniform RANdom variate generators.  Thus
+  summary: 'R Interface to the UNU.RAN Random Variate Generators'
+  description: 'Interface to the UNU.RAN library for Universal Non-Uniform RANdom variate generators.  Thus
     it allows to build non-uniform random number generators from quite arbitrary distributions.
     In particular, it provides an algorithm for fast numerical inversion for distribution
     with given density function. In addition, the package contains densities, distribution
