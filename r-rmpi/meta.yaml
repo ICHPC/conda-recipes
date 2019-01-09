@@ -1,0 +1,49 @@
+{% set version = '0.6-9' %}
+
+package:
+  name: r-rmpi
+  version: {{ version|replace("-", "_") }}
+
+source:
+  url:
+    - {{ cran_mirror }}/src/contrib/Rmpi_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/Rmpi/Rmpi_{{ version }}.tar.gz
+  sha256: b2e1eac3e56f6b26c7ce744b29d8994ab6507ac88df64ebbb5af439414651ee6
+
+build:
+  skip: True  # [not linux]
+  number: 0
+  rpaths:
+    - lib/R/lib/
+    - lib/
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - autoconf
+    - automake
+    - pkg-config
+    - make
+  host:
+    - r-base
+    - openmpi
+  run:
+    - r-base
+    - openmpi
+
+test:
+  commands:
+    - module load mpi/intel-2018 && $R -e "library('Rmpi')"
+
+about:
+  home: http://fisher.stats.uwo.ca/faculty/yu/Rmpi
+  license: GPL (>= 2)
+  summarry: An interface (wrapper) to MPI. It also  provides interactive R manager and worker
+            environment.
+  description: This version has been compiled against Intel MPI present at Imperial College HPC.
+  license_family: GPL3
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
+
+extra:
+  recipe-maintainers:
+    - slacalle 
