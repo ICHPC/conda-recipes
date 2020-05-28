@@ -1,0 +1,44 @@
+{% set name = "Dcm2Bids" %}
+{% set version = "1.1.8" %}
+{% set hash = "dbad994e7498b7b7a5e5dc876bcdc8a3776cad6611f3fd913cadd8d6b9fdc36e" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  url: 'https://github.com/cbedetti/Dcm2Bids/archive/{{ version }}.tar.gz' 
+  sha256: {{ hash }}
+
+build:
+  number: 0
+  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv "
+
+requirements:
+  build:
+    - python
+
+  host:
+    - future >=0.16.0
+    - pip
+    - python
+
+  run:
+    - future >=0.16.0
+    - pip
+    - python
+
+test:
+  imports:
+    - dcm2bids
+
+about:
+  home: https://github.com/cbedetti/Dcm2Bids
+  license: GPL3
+  license_family: GPL
+  license_file: LICENSE.txt
+  summary: Reorganising NIfTI files from dcm2niix into the Brain Imaging Data Structure
+
+extra:
+  recipe-maintainers:
+    - slacalle

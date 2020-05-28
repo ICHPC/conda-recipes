@@ -1,0 +1,47 @@
+{% set version = '2.2' %}
+{% set name = 'OneR' %}
+{% set hash = '62ab3f94a45451d68212ad0c94647fc570b33cc88169f749f46215cc19fcf9cc' %}
+
+package:
+  name: 'r-{{ name|lower }}'
+  version: {{ version }}
+
+source:
+  fn: '{{ name }}_{{ version }}.tar.gz'
+  url:
+    - https://cran.r-project.org/src/contrib/{{ name }}_{{ version }}.tar.gz
+    - https://cran.r-project.org/src/contrib/Archive/{{ name }}/{{ name }}_{{ version }}.tar.gz
+  sha256: {{ hash }}
+
+build:
+  number: 0
+
+  rpaths:
+    - lib/R/lib/
+    - lib/
+
+requirements:
+  build:
+    - r-base
+
+  host:
+    - r-base
+
+  run:
+    - r-base
+
+test:
+  commands:
+    - $R -e "library('OneR')"
+
+about:
+  home: https://github.com/vonjd/OneR
+  license: MIT
+  license_file: LICENSE
+  summary: Implements the One Rule (OneR) Machine Learning classification algorithm (Holte, R.C.
+    (1993) <doi:10.1023/A:1022631118932>) with enhancements for sophisticated handling
+    of numeric data and missing values together with extensive diagnostic functions.
+    It is useful as a baseline for machine learning models and the rules are often helpful
+    heuristics.
+  license_family: MIT
+

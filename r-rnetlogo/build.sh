@@ -6,6 +6,6 @@ if [[ $target_platform =~ linux.* ]] || [[ $target_platform == osx-64 ]]; then
   grep -v '^Priority: ' DESCRIPTION.old > DESCRIPTION
   $R CMD INSTALL --build .
 else
-  mkdir -p $PREFIX/lib/R/library/meta
-  mv * $PREFIX/lib/R/library/meta
+  mkdir -p $PREFIX/lib/R/library/RNetLogo
+  mv * $PREFIX/lib/R/library/RNetLogo
 fi

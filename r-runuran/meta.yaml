@@ -1,0 +1,51 @@
+{% set version = '0.24' %}
+{% set name = 'Runuran' %}
+{% set hash = 'c9939a7e232ae01d947ef2df65aa5526b1d089f2c7c93e8cf28f54f0ee974894' %}
+
+package:
+  name: 'r-{{ name|lower }}'
+  version: {{ version }}
+
+source:
+  fn: '{{ name }}_{{ version }}.tar.gz'
+  url: 'https://cran.r-project.org/src/contrib/{{ name }}_{{ version }}.tar.gz'
+  sha256: {{ hash }}
+
+build:
+  skip: True    # [win]
+  number: 1
+
+  rpaths:
+    - lib/R/lib/
+    - lib/
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - autoconf
+    - automake
+    - pkg-config
+    - make
+
+  host:
+    - r-base
+
+  run:
+    - r-base
+
+test:
+  commands:
+    - $R -e "library('Runuran')"
+
+about:
+  home: http://statmath.wu.ac.at/unuran/
+  license: GPL (>= 2)
+  license_family: GPL
+  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
+  summary: 'R Interface to the UNU.RAN Random Variate Generators'
+  description: 'Interface to the UNU.RAN library for Universal Non-Uniform RANdom variate generators.  Thus
+    it allows to build non-uniform random number generators from quite arbitrary distributions.
+    In particular, it provides an algorithm for fast numerical inversion for distribution
+    with given density function. In addition, the package contains densities, distribution
+    functions and quantiles from a couple of distributions. '
+

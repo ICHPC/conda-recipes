@@ -1,0 +1,32 @@
+{% set name = 'ANTs' %}
+{% set version = '2.3.1' %}
+{% set hash = 'c0680feab0ebb85c8cd6685043126666929b35e1cf387a5cc1d3a2d7169bddd3' %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  fn: 'v{{ version }}.tar.gz'
+  url: 'https://github.com/ANTsX/ANTs/archive/v{{ version}}.tar.gz'
+  sha256: '{{ hash }}'
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - cmake
+    - itk
+
+test:
+  commands:
+    - ANTS --help
+
+about:
+  home: 'https://stnava.github.io/ANTs/'
+  license: 'BSD License'
+  license_family: 'BSD'
+  license_file: 'ANTSCopyright.txt'
+  summary: 'Advanced Normalization Tools - ANTs extracts information from complex datasets that include imaging (Word Cloud). Paired with ANTsR (answer), ANTs is useful for managing, interpreting and visualizing multidimensional data. ANTs is popularly considered a state-of-the-art medical image registration and segmentation toolkit.'
