@@ -1,55 +1,73 @@
-{% set version = '1.2' %}
-{% set name = 'rcdd' %}
-{% set hash = '5e910060841ee7a1fcbfbafb189323633ac3f1d753459727f31002ba5d6ef1e8' %}
+{% set version = '1.5' %}
+
+{% set posix = 'm2-' if win else '' %}
+{% set native = 'm2w64-' if win else '' %}
 
 package:
-  name: 'r-{{ name }}'
-  version: '{{ version|replace("-", "_") }}'
+  name: r-rcdd
+  version: {{ version|replace("-", "_") }}
 
 source:
-  fn: '{{ name }}_{{ version }}.tar.gz'
   url:
-    - 'https://cran.r-project.org/src/contrib/{{ name }}_{{ version }}.tar.gz'
-  sha256: '{{ hash }}'
+    - {{ cran_mirror }}/src/contrib/rcdd_{{ version }}.tar.gz
+    - {{ cran_mirror }}/src/contrib/Archive/rcdd/rcdd_{{ version }}.tar.gz
+  sha256: 592614c8fd2dc1c3d9fd8a4be2159d38a7028962bba23a25186a19b13706bd7f
 
 build:
-  skip: True  # [win]
-  number: 2
+  merge_build_host: True  # [win]
+  # If this is a new build for the same version, increment the build number.
+  number: 0
+  # no skip
 
+  # This is required to make R link correctly on Linux.
   rpaths:
     - lib/R/lib/
     - lib/
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - autoconf
-    - pkg-config
-    - make
+    - {{ compiler('c') }}              # [not win]
+    - {{ compiler('m2w64_c') }}        # [win]
+    - {{ posix }}filesystem        # [win]
+    - {{ posix }}sed               # [win]
+    - {{ posix }}grep              # [win]
+    - {{ posix }}autoconf
+    - {{ posix }}automake          # [not win]
+    - {{ posix }}automake-wrapper  # [win]
+    - {{ posix }}pkg-config
+    - {{ posix }}make
+    - {{ posix }}coreutils         # [win]
+    - {{ posix }}zip               # [win]
 
   host:
-    - r >=3.0.2
-    - gmp
+    - r-base
 
   run:
-    - r >=3.0.2
-    - gmp
+    - r-base
+    - {{native}}gcc-libs         # [win]
 
 test:
   commands:
-    - $R -e "library('rcdd')"
+    # You can put additional test commands to be run here.
+    - $R -e "library('rcdd')"           # [not win]
+    - "\"%R%\" -e \"library('rcdd')\""  # [win]
+
+  # You can also put a file called run_test.py, run_test.sh, or run_test.bat
+  # in the recipe that will be run at test time.
+
+  # requires:
+    # Put any additional test requirements here.
 
 about:
-  home: 'http://www.stat.umn.edu/geyer/rcdd/'
-  license: 'GPL-2'
-  license_family: 'GPL2'
-  license_file: '{{ environ["RECIPE_DIR"] }}/LICENSE'
-  summary: 'rcdd - Computational Geometry - C Double Description'
-  Description: |
-    'R interface to (some of) cddlib (<http://www.ifor.math.ethz.ch/~fukuda/cdd_home/cdd.html>).
-    Converts back and forth between two representations of a convex polytope: as solution
-    of a set of linear equalities and inequalities and as convex hull of set of points
-    and rays. Also does linear programming and redundant generator elimination (for
-    example, convex hull in n dimensions).  All functions can use exact infinite-precision
-    rational arithmetic.'
+  home: https://www.stat.umn.edu/geyer/rcdd/, https://github.com/cjgeyer/rcdd
+  license: GPL-2
+  summary: 'R interface to (some of) cddlib (<https://github.com/cddlib/cddlib>). Converts back
+    and forth between two representations of a convex polytope: as solution of a set
+    of linear equalities and inequalities and as convex hull of set of points and rays.
+    Also does linear programming and redundant generator elimination (for example, convex
+    hull in n dimensions).  All functions can use exact infinite-precision rational
+    arithmetic.'
+  license_family: GPL2
+  license_file:
+    - '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-2'
 
